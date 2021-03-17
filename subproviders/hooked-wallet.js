@@ -108,17 +108,15 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
       })
       return
 
-    case 'eth_call':
-      txParams = payload.params[0]
-      txParams.chainType = "ETH"
-      waterfall([
-        (cb) => self.ethCall(txParams, cb),
-      ], end)
-      return
+    // case 'eth_call':
+    //   txParams = payload.params[0]
+    //   waterfall([
+    //     (cb) => self.ethCall(txParams, cb),
+    //   ], end)
+    //   return
 
     case 'eth_sendTransaction':
       txParams = payload.params[0]
-      txParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validateTransaction(txParams, cb),
         (cb) => self.processTransaction(txParams, cb),
@@ -127,7 +125,6 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
 
     case 'eth_signTransaction':
       txParams = payload.params[0]
-      txParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validateTransaction(txParams, cb),
         (cb) => self.processSignTransaction(txParams, cb),
@@ -145,7 +142,6 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
         from: address,
         data: message,
       })
-      msgParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validateMessage(msgParams, cb),
         (cb) => self.processMessage(msgParams, cb),
@@ -185,7 +181,6 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
         from: address,
         data: message,
       })
-      msgParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validatePersonalMessage(msgParams, cb),
         (cb) => self.processPersonalMessage(msgParams, cb),
